@@ -50,8 +50,6 @@
     position: relative;
     z-index: 1;
   }
-
-  /* ---------- HERO ---------- */
   .hero {
     text-align: center;
     padding: 18px 10px 26px;
@@ -91,48 +89,6 @@
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
-  /* ---------- SETUP ---------- */
-  .setup {
-    background: var(--board-dark);
-    border: 1px dashed var(--line);
-    border-radius: 10px;
-    padding: 18px 20px;
-    margin-bottom: 20px;
-    font-size: 0.85rem;
-    color: var(--chalk-dim);
-    animation: fadeUp 0.6s ease 0.1s both;
-  }
-  .setup.hidden { display: none; }
-  .setup label { display: block; margin-bottom: 8px; color: var(--chalk); font-weight: 600; }
-  .setup input[type="text"] {
-    width: 100%;
-    padding: 11px 14px;
-    border-radius: 8px;
-    border: 1px solid var(--line);
-    background: rgba(244,241,230,0.05);
-    color: var(--chalk);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.85rem;
-    margin-bottom: 12px;
-    transition: border-color 0.15s ease;
-  }
-  .setup input[type="text"]:focus { outline: none; border-color: var(--teal); }
-  .setup a { color: var(--teal); text-decoration: underline; }
-  .setup button {
-    background: var(--teal);
-    border: none;
-    color: var(--board-darker);
-    font-weight: 700;
-    padding: 9px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
-  }
-  .setup button:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(111,174,159,0.3); }
-
-  /* ---------- SUBJECT TABS ---------- */
   .subjects {
     display: flex;
     gap: 8px;
@@ -166,8 +122,6 @@
     border-color: var(--teal);
     box-shadow: 0 3px 10px rgba(111,174,159,0.35);
   }
-
-  /* ---------- QUICK STARTERS ---------- */
   .starters {
     display: flex;
     flex-wrap: wrap;
@@ -189,8 +143,6 @@
     background: rgba(232,196,104,0.16);
     transform: translateY(-1px);
   }
-
-  /* ---------- CHAT ---------- */
   .chat-window {
     flex: 1;
     background: rgba(244,241,230,0.03);
@@ -265,8 +217,6 @@
     0%, 80%, 100% { opacity: 0.25; transform: translateY(0); }
     40% { opacity: 1; transform: translateY(-2px); }
   }
-
-  /* ---------- COMPOSER ---------- */
   .composer {
     display: flex;
     gap: 8px;
@@ -293,223 +243,3 @@
     border: none;
     border-radius: 10px;
     padding: 0 22px;
-    font-weight: 700;
-    font-family: 'IBM Plex Sans', sans-serif;
-    cursor: pointer;
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
-  }
-  button#send:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(232,196,104,0.35); }
-  button#send:disabled { opacity: 0.5; cursor: default; transform: none; box-shadow: none; }
-
-  footer {
-    text-align: center;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.72rem;
-    color: rgba(244,241,230,0.35);
-    margin-top: 16px;
-  }
-  ::-webkit-scrollbar { width: 8px; }
-  ::-webkit-scrollbar-thumb { background: rgba(244,241,230,0.15); border-radius: 4px; }
-  @media (prefers-reduced-motion: reduce) {
-    * { animation: none !important; transition: none !important; }
-  }
-  @media (max-width: 500px) {
-    .hero { padding: 10px 4px 18px; }
-    .chat-window { max-height: 45vh; }
-  }
-</style>
-</head>
-<body>
-<div class="doodle" style="top:8%; left:5%; font-size:2.2rem; transform:rotate(-12deg);">∫</div>
-<div class="doodle" style="top:22%; right:6%; font-size:1.8rem; transform:rotate(10deg);">π</div>
-<div class="doodle" style="bottom:15%; left:8%; font-size:2rem; transform:rotate(6deg);">E=mc²</div>
-<div class="doodle" style="bottom:30%; right:4%; font-size:1.6rem; transform:rotate(-8deg);">✎</div>
-
-<div class="app">
-  <div class="hero">
-    <div class="hero-badge">Free · No signup for students</div>
-    <h1 class="title">Study<span>Buddy</span></h1>
-    <p class="subhead">Stuck on homework? Pick a subject, ask your question, and get a patient step-by-step explanation — not just the answer.</p>
-  </div>
-
-  <div class="setup" id="setup">
-    <label>Activate Study Buddy with a free Gemini API key</label>
-    <input type="text" id="apiKey" placeholder="AIzaSy...">
-    <button id="saveKey">Activate</button>
-    <div style="margin-top:10px;">Don't have one? Get a free key at
-      <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">aistudio.google.com/app/apikey</a>
-      — takes about a minute, no payment info needed.
-    </div>
-  </div>
-
-  <div class="subjects" id="subjects">
-    <div class="tab active" data-subject="General">📚 General</div>
-    <div class="tab" data-subject="Math">➗ Math</div>
-    <div class="tab" data-subject="Science">🔬 Science</div>
-    <div class="tab" data-subject="English">✍️ English</div>
-    <div class="tab" data-subject="History">🏛️ History</div>
-    <div class="tab" data-subject="Coding">💻 Coding</div>
-  </div>
-
-  <div class="starters" id="starters"></div>
-
-  <div class="chat-window" id="chat">
-    <div class="msg system">Pick a subject above, then ask a question — or tap a quick starter below the tabs.</div>
-  </div>
-
-  <div class="composer">
-    <textarea id="input" placeholder="Ask a homework question..." rows="1"></textarea>
-    <button id="send">Send</button>
-  </div>
-
-  <footer>Study Buddy — built to help you understand, not just finish faster.</footer>
-</div>
-
-<script>
-  let apiKey = "";
-  let subject = "General";
-  let history = [];
-
-  const STARTERS = {
-    General: ["Explain photosynthesis simply", "How do I write a thesis statement?", "Help me plan a study schedule"],
-    Math: ["Explain how to solve quadratic equations", "What's the Pythagorean theorem?", "Help me with fractions"],
-    Science: ["Explain Newton's laws of motion", "What is the water cycle?", "How do vaccines work?"],
-    English: ["Help me analyze a poem's theme", "What's the difference between a metaphor and simile?", "How do I structure an essay?"],
-    History: ["Explain the causes of World War 1", "What was the Industrial Revolution?", "Summarize the French Revolution"],
-    Coding: ["Explain what a for-loop does", "What is a variable in programming?", "Help me debug my code logic"]
-  };
-
-  const setup = document.getElementById('setup');
-  const chat = document.getElementById('chat');
-  const input = document.getElementById('input');
-  const sendBtn = document.getElementById('send');
-  const apiKeyInput = document.getElementById('apiKey');
-  const startersEl = document.getElementById('starters');
-
-  function renderStarters() {
-    startersEl.innerHTML = '';
-    (STARTERS[subject] || []).forEach(text => {
-      const chip = document.createElement('div');
-      chip.className = 'starter-chip';
-      chip.textContent = text;
-      chip.addEventListener('click', () => {
-        input.value = text;
-        autoGrow();
-        input.focus();
-      });
-      startersEl.appendChild(chip);
-    });
-  }
-  renderStarters();
-
-  document.getElementById('saveKey').addEventListener('click', () => {
-    const val = apiKeyInput.value.trim();
-    if (!val) return;
-    apiKey = val;
-    setup.classList.add('hidden');
-    addMessage('system', 'Study Buddy is ready. Ask away!');
-  });
-
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      subject = tab.dataset.subject;
-      renderStarters();
-    });
-  });
-
-  function addMessage(role, text) {
-    const div = document.createElement('div');
-    div.className = 'msg ' + role;
-    div.textContent = text;
-    chat.appendChild(div);
-    chat.scrollTop = chat.scrollHeight;
-    return div;
-  }
-
-  function addTypingIndicator() {
-    const div = document.createElement('div');
-    div.className = 'msg bot';
-    div.innerHTML = '<span class="typing-dots"><span></span><span></span><span></span></span>';
-    chat.appendChild(div);
-    chat.scrollTop = chat.scrollHeight;
-    return div;
-  }
-
-  function autoGrow() {
-    input.style.height = 'auto';
-    input.style.height = Math.min(input.scrollHeight, 120) + 'px';
-  }
-  input.addEventListener('input', autoGrow);
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  });
-  sendBtn.addEventListener('click', sendMessage);
-
-  async function sendMessage() {
-    const text = input.value.trim();
-    if (!text) return;
-    if (!apiKey) {
-      setup.classList.remove('hidden');
-      addMessage('system', 'Please activate Study Buddy with a free API key first.');
-      return;
-    }
-    addMessage('user', text);
-    history.push({ role: 'user', text });
-    input.value = '';
-    autoGrow();
-    sendBtn.disabled = true;
-
-    const thinking = addTypingIndicator();
-
-    try {
-      const systemPrompt = `You are Study Buddy, a friendly, patient tutor helping a student with ${subject}. Explain concepts step by step in simple language. Don't just give final answers to homework problems -- guide the student to understand the reasoning, using short paragraphs or numbered steps. Keep responses focused and not too long.`;
-
-      const contents = [
-        { role: 'user', parts: [{ text: systemPrompt }] },
-        { role: 'model', parts: [{ text: "Understood! I'm ready to help." }] },
-        ...history.map(h => ({
-          role: h.role === 'user' ? 'user' : 'model',
-          parts: [{ text: h.text }]
-        }))
-      ];
-
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents })
-        }
-      );
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        thinking.innerHTML = '';
-        thinking.textContent = 'Error: ' + (data.error && data.error.message ? data.error.message : 'Something went wrong. Check your API key.');
-        thinking.classList.add('system');
-        thinking.classList.remove('bot');
-      } else {
-        const reply = (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0].text) || 'Sorry, I could not generate a response.';
-        thinking.innerHTML = '';
-        thinking.textContent = reply;
-        history.push({ role: 'model', text: reply });
-      }
-    } catch (err) {
-      thinking.innerHTML = '';
-      thinking.textContent = 'Network error -- please check your connection and try again.';
-      thinking.classList.add('system');
-      thinking.classList.remove('bot');
-    }
-
-    sendBtn.disabled = false;
-    chat.scrollTop = chat.scrollHeight;
-  }
-</script>
-</body>
-</html>
